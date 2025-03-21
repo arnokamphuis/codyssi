@@ -17,8 +17,10 @@ year = 2000 + args.year
 day  = args.day
 
 os.mkdir('day{:02d}-{}'.format(day,args.year))
-
-cmd = f'curl https://adventofcode.com/20{args.year}/day/{args.day}/input --cookie "session={SESSION}" -A {useragent}'
+problem = 4 + day
+cmd = f'curl -s https://www.codyssi.com/view_problem_{problem}_input --cookie "session={SESSION}" -A "{useragent}"  | sed -e \'s/<[^>]*>//g\''
+print(cmd)
+# cmd = f'curl https://adventofcode.com/20{args.year}/day/{args.day}/input --cookie "session={SESSION}" -A {useragent}'
 output = subprocess.check_output(cmd, shell=True)
 output = output.decode('utf-8')
 real_output = '\n'.join(output.split('\n'))
@@ -36,4 +38,4 @@ test_input_file.close()
 shutil.copy('template.py', 'day{:02d}-{}/day{:02d}-{}.py'.format(day,args.year,day,args.year))
 subprocess.Popen('git add day{:02d}-{}/*'.format(day, args.year), shell=True)
 
-wb.open(f'https://adventofcode.com/{year}/day/{day}')
+# wb.open(f'https://adventofcode.com/{year}/day/{day}')
