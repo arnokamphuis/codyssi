@@ -9,7 +9,7 @@ SESSION = session_file.readlines()[0].strip()
 
 useragent = 'https://github.com/arnokamphuis/codyssi/blob/master/prepare.py'
 parser = argparse.ArgumentParser(description='Read input')
-parser.add_argument('--year', type=int, default=24)
+parser.add_argument('--year', type=int, default=25)
 parser.add_argument('--day', type=int, default=1)
 args = parser.parse_args()
 
@@ -18,8 +18,7 @@ day  = args.day
 
 os.mkdir('day{:02d}-{}'.format(day,args.year))
 problem = 4 + day
-cmd = f'curl -s https://www.codyssi.com/view_problem_{problem}_input --cookie "session={SESSION}" -A "{useragent}"  | sed -e \'s/<[^>]*>//g\''
-print(cmd)
+cmd = f'curl -s https://www.codyssi.com/view_problem_{problem}_input --cookie "session={SESSION}" -A "{useragent}"'
 # cmd = f'curl https://adventofcode.com/20{args.year}/day/{args.day}/input --cookie "session={SESSION}" -A {useragent}'
 output = subprocess.check_output(cmd, shell=True)
 output = output.decode('utf-8')
@@ -38,4 +37,4 @@ test_input_file.close()
 shutil.copy('template.py', 'day{:02d}-{}/day{:02d}-{}.py'.format(day,args.year,day,args.year))
 subprocess.Popen('git add day{:02d}-{}/*'.format(day, args.year), shell=True)
 
-# wb.open(f'https://adventofcode.com/{year}/day/{day}')
+wb.open(f'https://www.codyssi.com/view_problem_{problem}')
