@@ -26,12 +26,13 @@ def get_min_length(s, t):
         filled = {s: map[s[1]][s[0]]}
         q = deque([s])
         while q:
-            x,y = q.popleft()
+            (x,y) = q.popleft()
+            d = filled[(y,x)] 
             for dx,dy in dirs:
                 nx,ny = x+dx,y+dy
-                if 0 <= nx <= t[1] and 0 <= ny <= t[0] and ((ny,nx) not in filled.keys() or filled[(ny,nx)] > filled[(y,x)] + map[ny][nx]):
+                if 0 <= nx <= t[1] and 0 <= ny <= t[0] and ((ny,nx) not in filled.keys() or filled[(ny,nx)] > d + map[ny][nx]):
                     q.append((nx,ny))
-                    filled[(ny,nx)] = filled[(y,x)] + map[ny][nx]
+                    filled[(ny,nx)] = d + map[ny][nx]
         return filled
     
     fill = floodfill(s,t)
