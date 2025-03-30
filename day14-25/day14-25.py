@@ -23,8 +23,9 @@ def part1():
     sorted_items = sorted([(l[2], l[3], l[4]) for l in lines], reverse=True)
     return sum([i[2] for i in sorted_items[:5]])
 
+# 0-1 knapsack problem
 def solve(items, budget):
-    dp = {0: (0, 0)}
+    knapsack = {0: (0, 0)}
     for item in items:
         item_cost = item[1]
         item_quality = item[0]
@@ -32,23 +33,23 @@ def solve(items, budget):
         
         updates = {}
 
-        for cost, (quality, materials) in dp.items():
+        for cost, (quality, materials) in knapsack.items():
             new_cost = cost + item_cost
             
             if new_cost <= budget:
                 new_quality = quality + item_quality
                 new_materials = materials + item_materials
 
-                existing_quality, existing_materials = updates.get(new_cost, dp.get(new_cost, (-1, 10**9)))
+                existing_quality, existing_materials = updates.get(new_cost, knapsack.get(new_cost, (-1, 10**9)))
                 
                 if new_quality > existing_quality or (new_quality == existing_quality and new_materials < existing_materials):
                     updates[new_cost] = (new_quality, new_materials)
-        dp.update(updates)
+        knapsack.update(updates)
                 
     best_quality = 0
     best_materials = 0
     
-    for cost, (quality, materials) in dp.items():
+    for cost, (quality, materials) in knapsack.items():
         if quality > best_quality or (quality == best_quality and materials < best_materials):
             best_quality = quality
             best_materials = materials
