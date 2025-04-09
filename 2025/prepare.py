@@ -4,7 +4,7 @@ import webbrowser as wb
 import os
 import shutil
 
-session_file = open("session.txt", "r")
+session_file = open("../session.txt", "r")
 SESSION = session_file.readlines()[0].strip()
 
 useragent = 'https://github.com/arnokamphuis/codyssi/blob/master/prepare.py'
